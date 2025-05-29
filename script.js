@@ -7,13 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const bodyParts = ["head", "torso", "left-arm", "right-arm", "left-leg", "right-leg"];
 
-  const wordBank = [
-    { word: "banana", hint: "A yellow fruit" },
-    { word: "elephant", hint: "Largest land animal" },
-    { word: "guitar", hint: "A musical instrument with strings" },
-    { word: "javascript", hint: "Popular scripting language for the web" }
-  ];
-
   function resetHangmanDrawing() {
     bodyParts.forEach(id => {
       const part = document.getElementById(id);
@@ -22,13 +15,30 @@ document.addEventListener("DOMContentLoaded", () => {
     incorrectGuessCount = 0;
   }
 
+  async function fetchRandomWordAndHint() {
+    try {
+      const wordRes = await fetch("https://random-word-api.vercel.app/api?words=1");
+      const [word] = await wordRes.json();
+      const cleanWord = word.toLowerCase();
+
+      const dictRes = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${cleanWord}`);
+      const dictData = await dictRes.json();
+      const definition = dictData[0]?.meanings?.[0]?.definitions?.[0]?.definition || "No hint available.";
+
+      return { word: cleanWord, hint: definition };
+    } catch (err) {
+      console.error("Failed to fetch word/hint:", err);
+      return { word: "hangman", hint: "Fallback word: guess it!" };
+    }
+  }
+
   window.showTwoPlayerInputs = function () {
     document.getElementById("mode-selection").style.display = "none";
     document.getElementById("player1-inputs").style.display = "flex";
   };
 
-  window.startSinglePlayer = function () {
-    const random = wordBank[Math.floor(Math.random() * wordBank.length)];
+  window.startSinglePlayer = async function () {
+    const random = await fetchRandomWordAndHint();
     selectedWord = random.word;
     hint = random.hint;
     guessedLetters = [];
@@ -125,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetHangmanDrawing();
   };
 
-  // Handle key presses
+  
   document.addEventListener("keydown", function (event) {
     const message = document.getElementById("message").innerText;
     if (!selectedWord) return;
@@ -153,13 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Info icon toggle
+  
   document.getElementById("info-icon").addEventListener("click", () => {
     const box = document.getElementById("rules-box");
     box.style.display = box.style.display === "block" ? "none" : "block";
   });
 
-  // Close rules box on outside click
+  
   document.addEventListener("click", function (event) {
     const rulesBox = document.getElementById("rules-box");
     const infoIcon = document.getElementById("info-icon");
@@ -173,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Close rules box on Escape
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       const rulesBox = document.getElementById("rules-box");
