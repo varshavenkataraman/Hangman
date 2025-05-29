@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-panel {
+  flex: 1;
+  padding: 30px;
+  background-color: orange;
+}
+
+.right-panel {
+  flex: 1;
+  background-color: #add8e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  display: block;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.word-display {
+  font-size: 28px;
+  margin: 20px 0;
+  letter-spacing: 10px;
+}
+
+#keyboard button {
+  margin: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+/* Start screen */
+.full-orange-screen {
+  background-color: orange;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  color: blue;
+  font-size: 48px;
+  margin-bottom: 40px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-button {
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 150px;
+  text-align: center;
+}
+
+/* Hide all parts initially */
+#head,
+#torso,
+#left-arm,
+#right-arm,
+#left-leg,
+#right-leg {
+  display: none;
+}
+
+/* Info icon */
+#info-icon {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+  background-color: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #007bff;
+}
+
+/* Rules box */
+#rules-box {
+  position: fixed;
+  top: 50px;
+  left: 10px;
+  background-color: #add8e6;
+  color: black;
+  padding: 15px;
+  border-radius: 10px;
+  width: 250px;
+  display: none;
+  z-index: 999;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+#rules-box h3 {
+  margin-top: 0;
+}
